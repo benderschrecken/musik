@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Die Moorhexe</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #2d3436, #636e72);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #81ecec;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #a29bfe;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .question {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #fd79a8;
+        }
+
+        .question h3 {
+            color: #fd79a8;
+            margin-top: 0;
+        }
+
+        .answers {
+            margin: 15px 0;
+        }
+
+        .answer {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .answer:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #74b9ff;
+        }
+
+        .answer.selected {
+            border-color: #fd79a8;
+            background: rgba(253, 121, 168, 0.2);
+        }
+
+        .answer.correct {
+            border-color: #00b894;
+            background: rgba(0, 184, 148, 0.2);
+        }
+
+        .answer.wrong {
+            border-color: #e17055;
+            background: rgba(225, 112, 85, 0.2);
+        }
+
+        button {
+            background: linear-gradient(45deg, #fd79a8, #a29bfe);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 20px 10px;
+            transition: transform 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .score {
+            font-size: 2em;
+            color: #81ecec;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .explanation {
+            background: rgba(116, 185, 255, 0.1);
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #74b9ff;
+            font-style: italic;
+        }
+
+        .progress {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(45deg, #fd79a8, #a29bfe);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧙‍♀️ Die Moorhexe</h1>
+        <p class="subtitle">Quiz für Klavierspieler</p>
+        
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div id="quiz">
+            <!-- Frage 1 -->
+            <div class="question" data-question="0">
+                <h3>Wer hat "Die Moorhexe" komponiert?</h3>
+                <div class="answers">
+                    <label class="answer" data-answer="0">
+                        <input type="radio" name="q0" value="0"> Béla Bartók
+                    </label>
+                    <label class="answer" data-answer="1">
+                        <input type="radio" name="q0" value="1"> Barbara Heller
+                    </label>
+                    <label class="answer" data-answer="2">
+                        <input type="radio" name="q0" value="2"> Carl Orff
+                    </label>
+                    <label class="answer" data-answer="3">
+                        <input type="radio" name="q0" value="3"> Mike Schoenmehl
+                    </label>
+                </div>
+                <div class="explanation hidden">
+                    Barbara Heller (*1936) ist eine deutsche Komponistin, die besonders für ihre pädagogischen Klavierwerke bekannt ist.
+                </div>
+            </div>
+
+            <!-- Frage 2 -->
+            <div class="question hidden" data-question="1">
+                <h3>In welcher Tonart steht "Die Moorhexe"?</h3>
+                <div class="answers">
+                    <label class="answer" data-answer="0">
+                        <input type="radio" name="q1" value="0"> G-Dur
+                    </label>
+                    <label class="answer" data-answer="1">
+                        <input type="radio" name="q1" value="1"> d-Moll
+                    </label>
+                    <label class="answer" data-answer="2">
+                        <input type="radio" name="q1" value="2"> a-Moll
+                    </label>
+                    <label class="answer" data-answer="3">
+                        <input type="radio" name="q1" value="3"> e-Moll
+                    </label>
+                </div>
+                <div class="explanation hidden">
+                    Das Stück steht in d-Moll, was dem düsteren, geheimnisvollen Charakter der Moorhexe entspricht.
+                </div>
+            </div>
+
+            <!-- Frage 3 -->
+            <div class="question hidden" data-question="2">
+                <h3>Welches Tempo sollte gespielt werden?</h3>
+                <div class="answers">
+                    <label class="answer" data-answer="0">
+                        <input type="radio" name="q2" value="0"> Allegro
+                    </label>
+                    <label class="answer" data-answer="1">
+                        <input type="radio" name="q2" value="1"> Moderato misterioso
+                    </label>
+                    <label class="answer" data-answer="2">
+                        <input type="radio" name="q2" value="2"> Andante
+                    </label>
+                    <label class="answer" data-answer="3">
+                        <input type="radio" name="q2" value="3"> Presto
+                    </label>
+                </div>
+                <div class="explanation hidden">
+                    "Moderato misterioso" schafft die perfekte geheimnisvolle Stimmung für die Moorhexe.
+                </div>
+            </div>
+
+            <!-- Frage 4 -->
+            <div class="question hidden" data-question="3">
+                <h3>Welche Spieltechnik ist besonders wichtig?</h3>
+                <div class="answers">
+                    <label class="answer" data-answer="0">
+                        <input type="radio" name="q3" value="0"> Staccato
+                    </label>
+                    <label class="answer" data-answer="1">
+                        <input type="radio" name="q3" value="1"> Legato und Phrasierung
+                    </label>
+                    <label class="answer" data-answer="2">
+                        <input type="radio" name="q3" value="2"> Oktaven
+                    </label>
+                    <label class="answer" data-answer="3">
+                        <input type="radio" name="q3" value="3"> Schnelle Läufe
+                    </label>
+                </div>
+                <div class="explanation hidden">
+                    Das melodische Legato und die ausdrucksvolle Phrasierung sind entscheidend für den Charakter des Stücks.
+                </div>
+            </div>
+
+            <!-- Frage 5 -->
+            <div class="question hidden" data-question="4">
+                <h3>Für welche Zielgruppe ist das Stück geeignet?</h3>
+                <div class="answers">
+                    <label class="answer" data-answer="0">
+                        <input type="radio" name="q4" value="0"> Fortgeschrittene Schüler
+                    </label>
+                    <label class="answer" data-answer="1">
+                        <input type="radio" name="q4" value="1"> Kinder im 2.-4. Unterrichtsjahr
+                    </label>
+                    <label class="answer" data-answer="2">
+                        <input type="radio" name="q4" value="2"> Nur Erwachsene
+                    </label>
+                    <label class="answer" data-answer="3">
+                        <input type="radio" name="q4" value="3"> Konzertpianisten
+                    </label>
+                </div>
+                <div class="explanation hidden">
+                    Das Stück ist speziell für Kinder im 2.-4. Unterrichtsjahr konzipiert und fördert musikalischen Ausdruck.
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden" id="result">
+            <div class="result">
+                <div class="score" id="scoreDisplay"></div>
+                <p id="resultText"></p>
+            </div>
+            <button onclick="restartQuiz()">Quiz wiederholen</button>
+        </div>
+
+        <div style="text-align: center;">
+            <button id="checkBtn" onclick="checkAnswer()" disabled>Antwort prüfen</button>
+            <button id="nextBtn" onclick="nextQuestion()" class="hidden">Nächste Frage</button>
+            <button id="showResultBtn" onclick="showResult()" class="hidden">Ergebnis anzeigen</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        let score = 0;
+        const totalQuestions = 5;
+        const correctAnswers = [1, 1, 1, 1, 1]; // richtige Antworten
+
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function enableCheckButton() {
+            const selectedAnswer = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+            document.getElementById('checkBtn').disabled = !selectedAnswer;
+        }
+
+        // Event Listener für Radio Buttons
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'radio') {
+                // Entferne vorherige Auswahl-Styles
+                document.querySelectorAll(`[data-question="${currentQuestion}"] .answer`).forEach(answer => {
+                    answer.classList.remove('selected');
+                });
+                
+                // Füge selected Style hinzu
+                e.target.closest('.answer').classList.add('selected');
+                enableCheckButton();
+            }
+        });
+
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+            if (!selectedAnswer) return;
+
+            const selectedValue = parseInt(selectedAnswer.value);
+            const isCorrect = selectedValue === correctAnswers[currentQuestion];
+            
+            if (isCorrect) {
+                score++;
+            }
+
+            // Zeige richtige/falsche Antworten
+            document.querySelectorAll(`[data-question="${currentQuestion}"] .answer`).forEach((answer, index) => {
+                if (index === correctAnswers[currentQuestion]) {
+                    answer.classList.add('correct');
+                } else if (answer.classList.contains('selected') && index !== correctAnswers[currentQuestion]) {
+                    answer.classList.add('wrong');
+                }
+            });
+
+            // Zeige Erklärung
+            document.querySelector(`[data-question="${currentQuestion}"] .explanation`).classList.remove('hidden');
+
+            // Button-Status ändern
+            document.getElementById('checkBtn').classList.add('hidden');
+            
+            if (currentQuestion < totalQuestions - 1) {
+                document.getElementById('nextBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('showResultBtn').classList.remove('hidden');
+            }
+        }
+
+        function nextQuestion() {
+            // Verstecke aktuelle Frage
+            document.querySelector(`[data-question="${currentQuestion}"]`).classList.add('hidden');
+            
+            currentQuestion++;
+            updateProgress();
+            
+            // Zeige nächste Frage
+            document.querySelector(`[data-question="${currentQuestion}"]`).classList.remove('hidden');
+            
+            // Reset buttons
+            document.getElementById('nextBtn').classList.add('hidden');
+            document.getElementById('checkBtn').classList.remove('hidden');
+            document.getElementById('checkBtn').disabled = true;
+        }
+
+        function showResult() {
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('result').classList.remove('hidden');
+            
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('scoreDisplay').textContent = `${score}/${totalQuestions} (${percentage}%)`;
+            
+            let resultText = '';
+            if (percentage >= 90) {
+                resultText = '🎉 Ausgezeichnet! Du kennst die Moorhexe perfekt!';
+            } else if (percentage >= 70) {
+                resultText = '👍 Sehr gut! Du hast das Stück gut verstanden.';
+            } else if (percentage >= 50) {
+                resultText = '📚 Nicht schlecht! Noch etwas Übung und du wirst zum Experten.';
+            } else {
+                resultText = '💪 Übung macht den Meister! Beschäftige dich noch mehr mit dem Stück.';
+            }
+            
+            document.getElementById('resultText').textContent = resultText;
+            updateProgress();
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            
+            // Reset all questions
+            document.querySelectorAll('.question').forEach((question, index) => {
+                if (index === 0) {
+                    question.classList.remove('hidden');
+                } else {
+                    question.classList.add('hidden');
+                }
+                
+                // Reset styles
+                question.querySelectorAll('.answer').forEach(answer => {
+                    answer.classList.remove('selected', 'correct', 'wrong');
+                });
+                
+                // Reset radio buttons
+                question.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.checked = false;
+                });
+                
+                // Hide explanations
+                question.querySelector('.explanation').classList.add('hidden');
+            });
+            
+            // Reset buttons and views
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('quiz').classList.remove('hidden');
+            document.getElementById('checkBtn').classList.remove('hidden');
+            document.getElementById('checkBtn').disabled = true;
+            document.getElementById('nextBtn').classList.add('hidden');
+            document.getElementById('showResultBtn').classList.add('hidden');
+            
+            updateProgress();
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
