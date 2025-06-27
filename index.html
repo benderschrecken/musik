@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schulpraktisches Klavierspiel</title>
+    <meta name="description" content="Interaktive Lernmaterialien für schulpraktisches Klavierspiel">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎹</text></svg>">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>🎹 Schulpraktisches Klavierspiel</h1>
+            <p class="subtitle">Interaktive Lernmaterialien und Übungen</p>
+            
+            <div class="profile-section">
+                <!-- TODO: Ersetze mit echtem Profilbild -->
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" 
+                     alt="Markus Mustermann" 
+                     class="profile-image">
+                <div class="profile-info">
+                    <h3>Markus Mustermann</h3>
+                    <p>Sommersemester 2025</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2 class="section-title">Verfügbare Stücke</h2>
+        
+        <div class="songs-grid">
+            <!-- Die Moorhexe -->
+            <div class="song-card" data-song-id="moorhexe">
+                <div class="song-image" style="background-image: url('https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?w=400&h=200&fit=crop');">
+                </div>
+                <div class="song-info">
+                    <h3 class="song-title">🧙‍♀️ Die Moorhexe</h3>
+                    <p class="song-composer">Barbara Heller</p>
+                    <span class="song-difficulty">Mittelstufe</span>
+                </div>
+            </div>
+
+            <!-- Little Light of Mine -->
+            <div class="song-card" data-song-id="littlelight">
+                <div class="song-image" style="background-image: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=200&fit=crop');">
+                </div>
+                <div class="song-info">
+                    <h3 class="song-title">💡 This Little Light of Mine</h3>
+                    <p class="song-composer">Traditional Spiritual</p>
+                    <span class="song-difficulty">Anfänger</span>
+                </div>
+            </div>
+
+            <!-- Platzhalter für weitere Stücke -->
+            <div class="song-card" style="opacity: 0.5; cursor: not-allowed;">
+                <div class="song-image" style="background-image: url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=200&fit=crop'); filter: grayscale(100%);">
+                </div>
+                <div class="song-info">
+                    <h3 class="song-title">🚧 Weitere Stücke</h3>
+                    <p class="song-composer">Bald verfügbar...</p>
+                    <span class="song-difficulty">Verschiedene Level</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informationsbereich -->
+        <section style="margin-top: 4rem; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary-color);">📚 Was erwartet dich?</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+                <div>
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">🧠</div>
+                    <h4>Interaktive Quiz</h4>
+                    <p style="color: #7f8c8d; font-size: 0.9rem;">Teste dein Wissen über die Stücke</p>
+                </div>
+                
+                <div>
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎥</div>
+                    <h4>Video-Tutorials</h4>
+                    <p style="color: #7f8c8d; font-size: 0.9rem;">Schritt-für-Schritt Anleitungen</p>
+                </div>
+                
+                <div>
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎼</div>
+                    <h4>Notenmaterial</h4>
+                    <p style="color: #7f8c8d; font-size: 0.9rem;">Download als PDF verfügbar</p>
+                </div>
+                
+                <div>
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">💬</div>
+                    <h4>Feedback-System</h4>
+                    <p style="color: #7f8c8d; font-size: 0.9rem;">Teile deine Erfahrungen mit</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Schulpraktisches Klavierspiel - Markus Mustermann | Erstellt für das Sommersemester 2025</p>
+    </footer>
+
+    <script src="assets/script.js"></script>
+</body>
+</html>

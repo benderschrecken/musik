@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notenmaterial: Die Moorhexe - Schulpraktisches Klavierspiel</title>
+    <meta name="description" content="Notenmaterial zu 'Die Moorhexe' von Barbara Heller">
+    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎼</text></svg>">
+    <style>
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .breadcrumb a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--primary-color);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 0.5rem;
+            color: #bdc3c7;
+        }
+        
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .download-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-secondary);
+        }
+        
+        .download-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .file-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 2.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-subtitle {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+        }
+        
+        .card-content {
+            padding: 2rem;
+        }
+        
+        .file-details {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .detail-value {
+            color: #7f8c8d;
+        }
+        
+        .download-btn {
+            width: 100%;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .download-btn:hover::before {
+            left: 100%;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .preview-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 3rem 0;
+        }
+        
+        .preview-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .preview-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--gradient-secondary);
+            border-radius: 3px;
+        }
+        
+        .sheet-preview {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sheet-preview::before {
+            content: '🎼';
+            font-size: 4rem;
+            position: absolute;
+            opacity: 0.1;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .practice-tips {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+        
+        .practice-tips h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tip-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .tip-item h5 {
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tip-item p {
+            margin: 0;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .fingering-chart {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .fingering-chart h4 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .hand-diagram {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .hand {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 10px;
+        }
+        
+        .hand h5 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .fingers {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .finger {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .download-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .download-card {
+                margin: 0 1rem;
+            }
+            
+            .hand-diagram {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="song-header">
+        <div class="header-content">
+            <h1>🎼 Notenmaterial: Die Moorhexe</h1>
+            <p class="composer">Alle Noten und Materialien zum Download</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb">
+            <a href="../../index.html">🏠 Startseite</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="../index.html">🧙‍♀️ Die Moorhexe</a>
+            <span class="breadcrumb-separator">›</span>
+            <span>🎼 Notenmaterial</span>
+        </nav>
+
+        <!-- Download Cards -->
+        <div class="download-grid">
+            <!-- Hauptnoten -->
+            <div class="download-card">
+                <div class="card-header">
+                    <div class="file-icon">📄</div>
+                    <h3 class="card-title">Hauptnoten</h3>
+                    <p class="card-subtitle">Vollständiges Klavierstück</p>
+                </div>
+                <div class="card-content">
+                    <div class="file-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Format:</span>
+                            <span class="detail-value">PDF</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Seiten:</span>
+                            <span class="detail-value">4 Seiten</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Qualität:</span>
+                            <span class="detail-value">300 DPI</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Größe:</span>
+                            <span class="detail-value">2.1 MB</span>
+                        </div>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('moorhexe-noten.pdf')">
+                        📥 Noten herunterladen
+                    </button>
+                </div>
+            </div>
+
+            <!-- Fingersätze -->
+            <div class="download-card">
+                <div class="card-header">
+                    <div class="file-icon">✋</div>
+                    <h3 class="card-title">Mit Fingersätzen</h3>
+                    <p class="card-subtitle">Optimale Fingersätze eingetragen</p>
+                </div>
+                <div class="card-content">
+                    <div class="file-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Format:</span>
+                            <span class="detail-value">PDF</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Seiten:</span>
+                            <span class="detail-value">4 Seiten</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Besonderheit:</span>
+                            <span class="detail-value">Fingersätze</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Größe:</span>
+                            <span class="detail-value">2.3 MB</span>
+                        </div>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('moorhexe-fingersaetze.pdf')">
+                        📥 Mit Fingersätzen
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vereinfachte Version -->
+            <div class="download-card">
+                <div class="card-header">
+                    <div class="file-icon">🎹</div>
+                    <h3 class="card-title">Vereinfacht</h3>
+                    <p class="card-subtitle">Für Anfänger angepasst</p>
+                </div>
+                <div class="card-content">
+                    <div class="file-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Format:</span>
+                            <span class="detail-value">PDF</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Seiten:</span>
+                            <span class="detail-value">3 Seiten</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Level:</span>
+                            <span class="detail-value">Anfänger</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Größe:</span>
+                            <span class="detail-value">1.8 MB</span>
+                        </div>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('moorhexe-einfach.pdf')">
+                        📥 Vereinfachte Version
+                    </button>
+                </div>
+            </div>
+
+            <!-- Übungsblätter -->
+            <div class="download-card">
+                <div class="card-header">
+                    <div class="file-icon">📝</div>
+                    <h3 class="card-title">Übungsblätter</h3>
+                    <p class="card-subtitle">Spezielle Technik-Übungen</p>
+                </div>
+                <div class="card-content">
+                    <div class="file-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Format:</span>
+                            <span class="detail-value">PDF</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Seiten:</span>
+                            <span class="detail-value">6 Seiten</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Inhalt:</span>
+                            <span class="detail-value">Technik-Übungen</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Größe:</span>
+                            <span class="detail-value">3.2 MB</span>
+                        </div>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('moorhexe-uebungen.pdf')">
+                        📥 Übungsblätter
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notenvorschau -->
+        <div class="preview-section">
+            <h3>👀 Notenvorschau</h3>
+            <div class="sheet-preview">
+                <div>
+                    <p><strong>Hier würde eine Vorschau der ersten Seite stehen</strong></p>
+                    <p>Klicke auf "Noten herunterladen" um die vollständigen Noten zu erhalten</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fingersatz-Hilfe -->
+        <div class="fingering-chart">
+            <h4>🖐️ Fingersatz-Referenz</h4>
+            <p style="text-align: center; color: #7f8c8d; margin-bottom: 2rem;">
+                Nummerierung der Finger für optimales Spiel
+            </p>
+            
+            <div class="hand-diagram">
+                <div class="hand">
+                    <h5>Linke Hand</h5>
+                    <div class="fingers">
+                        <div class="finger">5</div>
+                        <div class="finger">4</div>
+                        <div class="finger">3</div>
+                        <div class="finger">2</div>
+                        <div class="finger">1</div>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #7f8c8d;">
+                        Kleiner Finger bis Daumen
+                    </p>
+                </div>
+                
+                <div class="hand">
+                    <h5>Rechte Hand</h5>
+                    <div class="fingers">
+                        <div class="finger">1</div>
+                        <div class="finger">2</div>
+                        <div class="finger">3</div>
+                        <div class="finger">4</div>
+                        <div class="finger">5</div>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #7f8c8d;">
+                        Daumen bis kleiner Finger
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Übungstipps -->
+        <div class="practice-tips">
+            <h4>💡 Noten-Übungstipps</h4>
+            <div class="tips-grid">
+                <div class="tip-item">
+                    <h5>📖 Lesen lernen</h5>
+                    <p>Übe das Notenlesen zunächst ohne Klavier. Benenne die Noten laut.</p>
+                </div>
+                
+                <div class="tip-item">
+                    <h5>🎯 Fingersätze</h5>
+                    <p>Halte dich konsequent an die eingetragenen Fingersätze - sie sind optimiert!</p>
+                </div>
+                
+                <div class="tip-item">
+                    <h5>🐌 Langsam beginnen</h5>
+                    <p>Spiele erst sehr langsam und steigere das Tempo nur allmählich.</p>
+                </div>
+                
+                <div class="tip-item">
+                    <h5>✏️ Markierungen</h5>
+                    <p>Markiere schwierige Stellen in den Noten und übe sie extra.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Notenmaterial: Die Moorhexe | Schulpraktisches Klavierspiel</p>
+    </footer>
+
+    <script src="../../assets/script.js"></script>
+    <script>
+        function downloadFile(filename) {
+            // Simulate file download
+            showNotification(`Download von ${filename} gestartet...`, 'info');
+            
+            // In a real implementation, this would be:
+            // const link = document.createElement('a');
+            // link.href = `../files/${filename}`;
+            // link.download = filename;
+            // document.body.appendChild(link);
+            // link.click();
+            // document.body.removeChild(link);
+            
+            // For demo purposes, we'll show a message
+            setTimeout(() => {
+                showNotification(`${filename} wurde heruntergeladen!`, 'success');
+            }, 1500);
+        }
+
+        // Add download tracking
+        document.addEventListener('DOMContentLoaded', function() {
+            const downloadButtons = document.querySelectorAll('.download-btn');
+            
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Add ripple effect
+                    const ripple = document.createElement('div');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = event.clientX - rect.left - size / 2;
+                    const y = event.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => ripple.remove(), 600);
+                    
+                    // Track download (could be sent to analytics)
+                    console.log('Download started:', this.textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

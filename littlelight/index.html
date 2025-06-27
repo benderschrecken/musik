@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This Little Light of Mine - Schulpraktisches Klavierspiel</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>">
+    <style>
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        .breadcrumb a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .breadcrumb a:hover {
+            color: var(--primary-color);
+        }
+        .breadcrumb-separator {
+            margin: 0 0.5rem;
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+    <header class="song-header">
+        <div class="header-content">
+            <h1>💡 This Little Light of Mine</h1>
+            <p class="composer">Traditional Spiritual</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb">
+            <a href="../index.html">🏠 Startseite</a>
+            <span class="breadcrumb-separator">›</span>
+            <span>💡 This Little Light of Mine</span>
+        </nav>
+
+        <div class="activities-grid">
+            <div class="activity-card" data-action="navigate" data-url="quiz/index.html">
+                <span class="activity-icon">🧠</span>
+                <h3 class="activity-title">Interaktives Quiz</h3>
+                <p class="activity-description">Teste dein Wissen über die Geschichte und Bedeutung dieses Spirituals.</p>
+            </div>
+
+            <div class="activity-card" data-action="navigate" data-url="videos/index.html">
+                <span class="activity-icon">🎥</span>
+                <h3 class="activity-title">Video-Tutorials</h3>
+                <p class="activity-description">Einfache Anleitungen für verschiedene Stilrichtungen und Schwierigkeitsgrade.</p>
+            </div>
+
+            <div class="activity-card" data-action="navigate" data-url="noten/index.html">
+                <span class="activity-icon">🎼</span>
+                <h3 class="activity-title">Notenmaterial</h3>
+                <p class="activity-description">Verschiedene Arrangements von Anfänger bis Fortgeschritten.</p>
+            </div>
+
+
+
+            <div class="activity-card" data-action="navigate" data-url="styles/index.html">
+                <span class="activity-icon">🎭</span>
+                <h3 class="activity-title">Stilrichtungen</h3>
+                <p class="activity-description">Gospel, Jazz, Blues und Contemporary Interpretationen.</p>
+            </div>
+
+            <div class="activity-card" data-action="navigate" data-url="patterns/index.html">
+                <span class="activity-icon">🎹</span>
+                <h3 class="activity-title">Begleitpatterns</h3>
+                <p class="activity-description">Verschiedene Begleitformen und Rhythmus-Patterns.</p>
+            </div>
+
+            <div class="activity-card" data-action="navigate" data-url="hintergrund/index.html">
+                <span class="activity-icon">📚</span>
+                <h3 class="activity-title">Hintergrund & Geschichte</h3>
+                <p class="activity-description">Erfahre mehr über die Entstehung und kulturelle Bedeutung des Spirituals.</p>
+            </div>
+        </div>
+
+        <!-- Kurze Info -->
+        <section style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary-color);">📖 Über das Spiritual</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center;">
+                <div>
+                    <h4 style="color: var(--accent-color);">🎹 Anfängerfreundlich</h4>
+                    <p style="color: #7f8c8d;">Einfache Akkorde, perfekt für den Einstieg</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-color);">🌍 Kulturelles Erbe</h4>
+                    <p style="color: #7f8c8d;">Afroamerikanisches Spiritual mit tiefer Bedeutung</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-color);">🎵 Vielseitig</h4>
+                    <p style="color: #7f8c8d;">Verschiedene Stilrichtungen möglich</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Bereich -->
+        <div class="activity-card" data-action="navigate" data-url="feedback.html" style="margin: 3rem auto; max-width: 600px; text-align: center;">
+            <span class="activity-icon">💬</span>
+            <h3 class="activity-title">Feedback-Formular</h3>
+            <p class="activity-description">
+                Teile deine Erfahrungen und Verbesserungsvorschläge mit!
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 This Little Light of Mine | Schulpraktisches Klavierspiel</p>
+    </footer>
+
+    <script src="../assets/script.js"></script>
+</body>
+</html>

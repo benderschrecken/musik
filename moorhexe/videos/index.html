@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos: Die Moorhexe - Schulpraktisches Klavierspiel</title>
+    <meta name="description" content="Video-Tutorials zu 'Die Moorhexe' von Barbara Heller">
+    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎥</text></svg>">
+    <style>
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .breadcrumb a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--primary-color);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 0.5rem;
+            color: #bdc3c7;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .video-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .video-player {
+            position: relative;
+            width: 100%;
+            height: 225px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .video-player::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=225&fit=crop') center/cover;
+            opacity: 0.3;
+        }
+        
+        .video-player .play-button {
+            position: relative;
+            z-index: 2;
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .video-player:hover .play-button {
+            transform: scale(1.1);
+            background: white;
+        }
+        
+        .video-info {
+            padding: 1.5rem;
+        }
+        
+        .video-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .video-description {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #95a5a6;
+        }
+        
+        .video-duration {
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .info-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 3rem 0;
+        }
+        
+        .info-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .info-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--gradient-secondary);
+            border-radius: 3px;
+        }
+        
+        .playlist-container {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            margin: 2rem 0;
+        }
+        
+        .playlist-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+        
+        .playlist-items {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .playlist-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .playlist-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(10px);
+        }
+        
+        .playlist-number {
+            background: white;
+            color: var(--primary-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .playlist-info h4 {
+            margin: 0 0 0.3rem 0;
+            font-size: 1rem;
+        }
+        
+        .playlist-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .video-card {
+                margin: 0 1rem;
+            }
+            
+            .video-player {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="song-header">
+        <div class="header-content">
+            <h1>🎥 Videos: Die Moorhexe</h1>
+            <p class="composer">Schritt-für-Schritt Tutorials</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb">
+            <a href="../../index.html">🏠 Startseite</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="../index.html">🧙‍♀️ Die Moorhexe</a>
+            <span class="breadcrumb-separator">›</span>
+            <span>🎥 Videos</span>
+        </nav>
+
+        <!-- Hauptvideos -->
+        <div class="video-grid">
+            <!-- Video 1: Überblick -->
+            <div class="video-card">
+                <div class="video-player" onclick="playVideo('dQw4w9WgXcQ')">
+                    <div class="play-button">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Einführung ins Stück</h3>
+                    <p class="video-description">
+                        Lerne "Die Moorhexe" kennen: Komponistin, Hintergrund und musikalische Besonderheiten. 
+                        Perfekt für den ersten Überblick.
+                    </p>
+                    <div class="video-meta">
+                        <span>📅 Grundlagen</span>
+                        <span class="video-duration">5:42</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 2: Technik -->
+            <div class="video-card">
+                <div class="video-player" onclick="playVideo('dQw4w9WgXcQ')">
+                    <div class="play-button">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Spieltechnik & Fingersätze</h3>
+                    <p class="video-description">
+                        Detaillierte Anleitung zu Fingersätzen, Legato-Spiel und den technischen 
+                        Herausforderungen des Stücks.
+                    </p>
+                    <div class="video-meta">
+                        <span>🎯 Technik</span>
+                        <span class="video-duration">8:15</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 3: Interpretation -->
+            <div class="video-card">
+                <div class="video-player" onclick="playVideo('dQw4w9WgXcQ')">
+                    <div class="play-button">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Musikalischer Ausdruck</h3>
+                    <p class="video-description">
+                        Wie erzeugst du die mysteriöse Atmosphäre? Dynamik, Phrasierung und 
+                        Pedaleinsatz erklärt.
+                    </p>
+                    <div class="video-meta">
+                        <span>🎭 Interpretation</span>
+                        <span class="video-duration">6:33</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 4: Häufige Fehler -->
+            <div class="video-card">
+                <div class="video-player" onclick="playVideo('dQw4w9WgXcQ')">
+                    <div class="play-button">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Häufige Fehler vermeiden</h3>
+                    <p class="video-description">
+                        Typische Stolpersteine und wie du sie umgehst. Mit praktischen Tipps 
+                        für das Üben zu Hause.
+                    </p>
+                    <div class="video-meta">
+                        <span>⚠️ Problemlösung</span>
+                        <span class="video-duration">7:21</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Übungsplaylist -->
+        <div class="playlist-container">
+            <h3 class="playlist-title">🎵 Übungssequenz</h3>
+            <p style="text-align: center; margin-bottom: 2rem; opacity: 0.9;">
+                Folge dieser Reihenfolge für optimale Lernergebnisse
+            </p>
+            
+            <div class="playlist-items">
+                <div class="playlist-item" onclick="playVideo('dQw4w9WgXcQ')">
+                    <div class="playlist-number">1</div>
+                    <div class="playlist-info">
+                        <h4>Warm-up Übungen</h4>
+                        <p>Finger- und Handgelenk-Vorbereitung • 3:20</p>
+                    </div>
+                </div>
+                
+                <div class="playlist-item" onclick="playVideo('dQw4w9WgXcQ')">
+                    <div class="playlist-number">2</div>
+                    <div class="playlist-info">
+                        <h4>Rechte Hand - Melodie</h4>
+                        <p>Melodielinie und Legato-Spiel • 4:45</p>
+                    </div>
+                </div>
+                
+                <div class="playlist-item" onclick="playVideo('dQw4w9WgXcQ')">
+                    <div class="playlist-number">3</div>
+                    <div class="playlist-info">
+                        <h4>Linke Hand - Begleitung</h4>
+                        <p>Basslinien und Harmonien • 5:12</p>
+                    </div>
+                </div>
+                
+                <div class="playlist-item" onclick="playVideo('dQw4w9WgXcQ')">
+                    <div class="playlist-number">4</div>
+                    <div class="playlist-info">
+                        <h4>Beide Hände zusammen</h4>
+                        <p>Koordination und Zusammenspiel • 6:30</p>
+                    </div>
+                </div>
+                
+                <div class="playlist-item" onclick="playVideo('dQw4w9WgXcQ')">
+                    <div class="playlist-number">5</div>
+                    <div class="playlist-info">
+                        <h4>Pedal und Ausdruck</h4>
+                        <p>Finale Verfeinerung • 4:15</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zusätzliche Informationen -->
+        <div class="info-section">
+            <h3>📚 Video-Tipps</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center;">
+                <div>
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">⏸️</div>
+                    <h4>Pausiere oft</h4>
+                    <p style="color: #7f8c8d;">Halte das Video an und probiere die gezeigten Passagen sofort aus.</p>
+                </div>
+                
+                <div>
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔄</div>
+                    <h4>Wiederhole Abschnitte</h4>
+                    <p style="color: #7f8c8d;">Schaue schwierige Stellen mehrmals und übe sie langsam.</p>
+                </div>
+                
+                <div>
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">📝</div>
+                    <h4>Mache Notizen</h4>
+                    <p style="color: #7f8c8d;">Notiere dir wichtige Hinweise direkt in deine Noten.</p>
+                </div>
+                
+                <div>
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎹</div>
+                    <h4>Übe regelmäßig</h4>
+                    <p style="color: #7f8c8d;">10-15 Minuten täglich sind besser als eine lange Session.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Videos: Die Moorhexe | Schulpraktisches Klavierspiel</p>
+    </footer>
+
+    <script src="../../assets/script.js"></script>
+    <script>
+        // YouTube video player
+        function playVideo(videoId) {
+            // Create modal for video
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.9);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            const videoContainer = document.createElement('div');
+            videoContainer.style.cssText = `
+                width: 90%;
+                max-width: 800px;
+                aspect-ratio: 16/9;
+                background: #000;
+                border-radius: 10px;
+                overflow: hidden;
+                position: relative;
+            `;
+            
+            const iframe = document.createElement('iframe');
+            iframe.style.cssText = `
+                width: 100%;
+                height: 100%;
+                border: none;
+            `;
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            iframe.title = "YouTube Video";
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            iframe.allowFullscreen = true;
+            
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '×';
+            closeButton.style.cssText = `
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: rgba(255,255,255,0.9);
+                border: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                font-size: 24px;
+                cursor: pointer;
+                z-index: 10001;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            `;
+            
+            closeButton.addEventListener('click', () => {
+                modal.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => document.body.removeChild(modal), 300);
+            });
+            
+            closeButton.addEventListener('mouseenter', () => {
+                closeButton.style.background = 'white';
+                closeButton.style.transform = 'scale(1.1)';
+            });
+            
+            closeButton.addEventListener('mouseleave', () => {
+                closeButton.style.background = 'rgba(255,255,255,0.9)';
+                closeButton.style.transform = 'scale(1)';
+            });
+            
+            // Close on background click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeButton.click();
+                }
+            });
+            
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeButton.click();
+                }
+            });
+            
+            videoContainer.appendChild(iframe);
+            videoContainer.appendChild(closeButton);
+            modal.appendChild(videoContainer);
+            document.body.appendChild(modal);
+            
+            // Add animation styles
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes fadeOut {
+                    from { opacity: 1; }
+                    to { opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Add hover effects to video cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoCards = document.querySelectorAll('.video-card');
+            
+            videoCards.forEach(card => {
+                const playButton = card.querySelector('.play-button');
+                
+                card.addEventListener('mouseenter', () => {
+                    playButton.style.transform = 'scale(1.1)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    playButton.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

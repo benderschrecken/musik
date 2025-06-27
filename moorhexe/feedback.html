@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback: Die Moorhexe - Schulpraktisches Klavierspiel</title>
+    <meta name="description" content="Feedback-Formular für Die Moorhexe">
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
+    <style>
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .breadcrumb a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--primary-color);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 0.5rem;
+            color: #bdc3c7;
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-secondary);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .form-header h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .form-header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .section {
+            margin: 2.5rem 0;
+            padding: 2rem;
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border-left: 5px solid var(--secondary-color);
+            position: relative;
+        }
+
+        .section::before {
+            content: attr(data-icon);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: white;
+            padding: 0 10px;
+            font-size: 1.5rem;
+        }
+
+        .section h3 {
+            color: var(--primary-color);
+            margin: 0 0 1.5rem 0;
+            font-size: 1.3rem;
+            font-weight: 500;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .form-group {
+            margin: 1.5rem 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1rem;
+        }
+
+        .required {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        input[type="text"], 
+        input[type="email"], 
+        select, 
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input[type="text"]:focus, 
+        input[type="email"]:focus, 
+        select:focus, 
+        textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            transform: translateY(-2px);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .rating-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1rem;
+            background: white;
+            border-radius: 25px;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .rating-item:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .rating-item input[type="radio"] {
+            accent-color: var(--secondary-color);
+            transform: scale(1.2);
+        }
+
+        .rating-item input[type="radio"]:checked + label {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            accent-color: var(--secondary-color);
+            transform: scale(1.3);
+        }
+
+        .checkbox-item input[type="checkbox"]:checked + label {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2.5rem;
+            background: var(--gradient-gold);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .submit-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: var(--gradient-secondary);
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            animation: slideInDown 0.5s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(116, 185, 255, 0.1), rgba(162, 155, 254, 0.1));
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .info-box::before {
+            content: '💡';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: white;
+            padding: 0 8px;
+            font-size: 1.2rem;
+        }
+
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--gradient-secondary);
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                margin: 1rem;
+                padding: 2rem 1.5rem;
+            }
+            
+            .rating-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-indicator" id="progressIndicator"></div>
+    
+    <header class="song-header">
+        <div class="header-content">
+            <h1>💬 Feedback: Die Moorhexe</h1>
+            <p class="composer">Deine Meinung hilft uns weiter!</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb">
+            <a href="../index.html">🏠 Startseite</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="index.html">🧙‍♀️ Die Moorhexe</a>
+            <span class="breadcrumb-separator">›</span>
+            <span>💬 Feedback</span>
+        </nav>
+
+        <div class="form-container">
+            <div class="form-header">
+                <h2>Dein Feedback ist wichtig!</h2>
+                <p>Hilf uns dabei, die Lernmaterialien zu verbessern</p>
+                <div style="color: #636e72; font-size: 0.9rem; margin-top: 1rem;">
+                    📅 Datum: <span id="currentDate"></span>
+                </div>
+            </div>
+            
+            <form id="feedbackForm">
+                <!-- Persönliche Daten -->
+                <div class="section" data-icon="👤">
+                    <h3>Persönliche Angaben</h3>
+                    
+                    <div class="form-group">
+                        <label for="name">Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required placeholder="Dein vollständiger Name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-Mail (optional)</label>
+                        <input type="email" id="email" name="email" placeholder="deine.email@beispiel.de">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="semester">Aktuelles Semester</label>
+                        <select id="semester" name="semester">
+                            <option value="">Bitte wählen...</option>
+                            <option value="1">1. Semester</option>
+                            <option value="2">2. Semester</option>
+                            <option value="3">3. Semester</option>
+                            <option value="4">4. Semester</option>
+                            <option value="5">5. Semester</option>
+                            <option value="6">6. Semester</option>
+                            <option value="höher">Höher als 6. Semester</option>
+                            <option value="abgeschlossen">Studium abgeschlossen</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">Klaviererfahrung in Jahren</label>
+                        <select id="experience" name="experience">
+                            <option value="">Bitte wählen...</option>
+                            <option value="0-1">0-1 Jahre</option>
+                            <option value="2-3">2-3 Jahre</option>
+                            <option value="4-5">4-5 Jahre</option>
+                            <option value="6-10">6-10 Jahre</option>
+                            <option value="mehr als 10">Mehr als 10 Jahre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Material-Bewertung -->
+                <div class="section" data-icon="⭐">
+                    <h3>Bewertung des Materials</h3>
+                    
+                    <div class="form-group">
+                        <label>Gesamtzufriedenheit mit den Lernmaterialien <span class="required">*</span></label>
+                        <div class="rating-group">
+                            <div class="rating-item">
+                                <input type="radio" id="satisfaction-1" name="satisfaction" value="1" required>
+                                <label for="satisfaction-1">😞 Sehr unzufrieden</label>
+                            </div>
+                            <div class="rating-item">
+                                <input type="radio" id="satisfaction-2" name="satisfaction" value="2">
+                                <label for="satisfaction-2">😐 Unzufrieden</label>
+                            </div>
+                            <div class="rating-item">
+                                <input type="radio" id="satisfaction-3" name="satisfaction" value="3">
+                                <label for="satisfaction-3">😊 Neutral</label>
+                            </div>
+                            <div class="rating-item">
+                                <input type="radio" id="satisfaction-4" name="satisfaction" value="4">
+                                <label for="satisfaction-4">😃 Zufrieden</label>
+                            </div>
+                            <div class="rating-item">
+                                <input type="radio" id="satisfaction-5" name="satisfaction" value="5">
+                                <label for="satisfaction-5">🤩 Sehr zufrieden</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Welche Materialien waren besonders hilfreich? (Mehrfachauswahl möglich)</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="help-quiz" name="helpful" value="Interaktives Quiz">
+                                <label for="help-quiz">🧠 Interaktives Quiz</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="help-videos" name="helpful" value="Video-Tutorials">
+                                <label for="help-videos">🎥 Video-Tutorials</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="help-notes" name="helpful" value="Notenmaterial">
+                                <label for="help-notes">🎼 Notenmaterial</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="help-tips" name="helpful" value="Übungstipps">
+                                <label for="help-tips">💡 Übungstipps</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="help-audio" name="helpful" value="Hörbeispiele">
+                                <label for="help-audio">🎵 Hörbeispiele</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="difficulty">Wie bewertest du den Schwierigkeitsgrad des Stücks?</label>
+                        <select id="difficulty" name="difficulty">
+                            <option value="">Bitte wählen...</option>
+                            <option value="zu leicht">Zu leicht für mein Niveau</option>
+                            <option value="angemessen">Angemessen für mein Niveau</option>
+                            <option value="herausfordernd">Herausfordernd, aber machbar</option>
+                            <option value="zu schwer">Zu schwer für mein Niveau</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Lernprozess -->
+                <div class="section" data-icon="📚">
+                    <h3>Dein Lernprozess</h3>
+                    
+                    <div class="form-group">
+                        <label for="time-spent">Wie viel Zeit hast du mit dem Material verbracht?</label>
+                        <select id="time-spent" name="time-spent">
+                            <option value="">Bitte wählen...</option>
+                            <option value="weniger als 30 min">Weniger als 30 Minuten</option>
+                            <option value="30-60 min">30-60 Minuten</option>
+                            <option value="1-2 Stunden">1-2 Stunden</option>
+                            <option value="mehr als 2 Stunden">Mehr als 2 Stunden</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="learning-goal">Hast du dein Lernziel erreicht?</label>
+                        <select id="learning-goal" name="learning-goal">
+                            <option value="">Bitte wählen...</option>
+                            <option value="vollständig">Vollständig erreicht</option>
+                            <option value="größtenteils">Größtenteils erreicht</option>
+                            <option value="teilweise">Teilweise erreicht</option>
+                            <option value="nicht erreicht">Nicht erreicht</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="improvements">Was könnte verbessert werden?</label>
+                        <textarea id="improvements" name="improvements" placeholder="Deine Verbesserungsvorschläge..." rows="4"></textarea>
+                    </div>
+                </div>
+
+                <!-- Zukunft -->
+                <div class="section" data-icon="🚀">
+                    <h3>Ausblick</h3>
+                    
+                    <div class="form-group">
+                        <label>Welche Stücke würdest du gerne als nächstes bearbeiten?</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="next-classical" name="next-pieces" value="Klassische Stücke">
+                                <label for="next-classical">🎭 Klassische Stücke</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="next-modern" name="next-pieces" value="Moderne Kompositionen">
+                                <label for="next-modern">🎨 Moderne Kompositionen</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="next-folk" name="next-pieces" value="Volkslied-Bearbeitungen">
+                                <label for="next-folk">🎵 Volkslied-Bearbeitungen</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="next-etudes" name="next-pieces" value="Technische Etüden">
+                                <label for="next-etudes">🏃‍♀️ Technische Etüden</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="general-comment">Weitere Kommentare oder Wünsche</label>
+                        <textarea id="general-comment" name="general-comment" placeholder="Hier ist Platz für deine weiteren Gedanken..." rows="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>Datenschutz:</strong> Deine Angaben werden nur zur Verbesserung der Lehrmaterialien verwendet und nicht an Dritte weitergegeben. Die Teilnahme ist freiwillig und du kannst jederzeit die Löschung deiner Daten verlangen.
+                </div>
+
+                <div class="success-message" id="successMessage">
+                    <h3>🎉 Vielen Dank für dein Feedback!</h3>
+                    <p>Deine Antworten wurden erfolgreich gespeichert und helfen uns dabei, die Materialien zu verbessern.</p>
+                </div>
+            </form>
+
+            <div class="submit-section">
+                <h3>Formular abschließen</h3>
+                <p>Dein Feedback wird automatisch als CSV-Datei gespeichert</p>
+                <div class="btn-group">
+                    <button type="button" class="btn" onclick="submitFeedback()">
+                        💾 Feedback speichern
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="downloadCSV()">
+                        📊 Als CSV herunterladen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Feedback: Die Moorhexe | Schulpraktisches Klavierspiel</p>
+    </footer>
+
+    <script src="../assets/script.js"></script>
+    <script>
+        // Set current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('de-DE');
+
+        // Progress indicator
+        function updateProgress() {
+            const form = document.getElementById('feedbackForm');
+            const requiredInputs = form.querySelectorAll('[required]');
+            const filledRequiredInputs = Array.from(requiredInputs).filter(input => {
+                if (input.type === 'radio') {
+                    return form.querySelector(`input[name="${input.name}"]:checked`);
+                }
+                return input.value.trim() !== '';
+            });
+            
+            const progress = (filledRequiredInputs.length / requiredInputs.length) * 100;
+            document.getElementById('progressIndicator').style.width = progress + '%';
+        }
+
+        // Add event listeners for progress tracking
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('feedbackForm');
+            form.addEventListener('input', updateProgress);
+            form.addEventListener('change', updateProgress);
+            updateProgress();
+        });
+
+        // Collect form data
+        function collectFormData() {
+            const form = document.getElementById('feedbackForm');
+            const formData = new FormData(form);
+            const data = {
+                timestamp: new Date().toISOString(),
+                datum: new Date().toLocaleDateString('de-DE'),
+                zeit: new Date().toLocaleTimeString('de-DE')
+            };
+
+            // Basic fields
+            for (let [key, value] of formData.entries()) {
+                if (key === 'helpful' || key === 'next-pieces') {
+                    if (!data[key]) data[key] = [];
+                    data[key].push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            // Convert arrays to strings
+            if (data.helpful) data.helpful = data.helpful.join('; ');
+            if (data['next-pieces']) data['next-pieces'] = data['next-pieces'].join('; ');
+
+            return data;
+        }
+
+        // Validate required fields
+        function validateForm() {
+            const form = document.getElementById('feedbackForm');
+            const requiredInputs = form.querySelectorAll('[required]');
+            const missingFields = [];
+
+            requiredInputs.forEach(input => {
+                if (input.type === 'radio') {
+                    const radioGroup = form.querySelector(`input[name="${input.name}"]:checked`);
+                    if (!radioGroup) {
+                        missingFields.push(input.closest('.form-group').querySelector('label').textContent);
+                    }
+                } else if (input.value.trim() === '') {
+                    missingFields.push(input.closest('.form-group').querySelector('label').textContent);
+                }
+            });
+
+            if (missingFields.length > 0) {
+                alert('Bitte fülle folgende Pflichtfelder aus:\\n\\n' + missingFields.join('\\n'));
+                return false;
+            }
+            return true;
+        }
+
+        // Submit feedback
+        function submitFeedback() {
+            if (!validateForm()) return;
+
+            const data = collectFormData();
+            
+            // Save to localStorage for persistence
+            const existingData = JSON.parse(localStorage.getItem('moorhexe-feedback') || '[]');
+            existingData.push(data);
+            localStorage.setItem('moorhexe-feedback', JSON.stringify(existingData));
+
+            // Show success message
+            document.getElementById('successMessage').classList.add('show');
+            
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+
+            // Auto-download CSV
+            setTimeout(() => {
+                downloadCSV();
+            }, 1000);
+
+            showNotification('Feedback erfolgreich gespeichert!', 'success');
+        }
+
+        // Download as CSV
+        function downloadCSV() {
+            const allData = JSON.parse(localStorage.getItem('moorhexe-feedback') || '[]');
+            
+            if (allData.length === 0) {
+                alert('Keine Daten zum Download verfügbar.');
+                return;
+            }
+
+            // Create CSV header
+            const headers = [
+                'Zeitstempel',
+                'Datum',
+                'Zeit',
+                'Name',
+                'Email',
+                'Semester',
+                'Klaviererfahrung',
+                'Gesamtzufriedenheit',
+                'Hilfreiche Materialien',
+                'Schwierigkeitsgrad',
+                'Zeit verbracht',
+                'Lernziel erreicht',
+                'Verbesserungsvorschläge',
+                'Gewünschte nächste Stücke',
+                'Weitere Kommentare'
+            ];
+
+            // Create CSV rows
+            const csvContent = [
+                headers.join(','),
+                ...allData.map(data => [
+                    data.timestamp || '',
+                    data.datum || '',
+                    data.zeit || '',
+                    `"${(data.name || '').replace(/"/g, '""')}"`,
+                    `"${(data.email || '').replace(/"/g, '""')}"`,
+                    `"${(data.semester || '').replace(/"/g, '""')}"`,
+                    `"${(data.experience || '').replace(/"/g, '""')}"`,
+                    data.satisfaction || '',
+                    `"${(data.helpful || '').replace(/"/g, '""')}"`,
+                    `"${(data.difficulty || '').replace(/"/g, '""')}"`,
+                    `"${(data['time-spent'] || '').replace(/"/g, '""')}"`,
+                    `"${(data['learning-goal'] || '').replace(/"/g, '""')}"`,
+                    `"${(data.improvements || '').replace(/"/g, '""')}"`,
+                    `"${(data['next-pieces'] || '').replace(/"/g, '""')}"`,
+                    `"${(data['general-comment'] || '').replace(/"/g, '""')}"`,
+                ].join(','))
+            ].join('\\n');
+
+            // Download file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `moorhexe-feedback-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showNotification('CSV-Datei wurde heruntergeladen!', 'success');
+        }
+
+        // Clear all data (for testing)
+        function clearAllData() {
+            if (confirm('Alle gespeicherten Feedback-Daten löschen? Diese Aktion kann nicht rückgängig gemacht werden.')) {
+                localStorage.removeItem('moorhexe-feedback');
+                showNotification('Alle Daten wurden gelöscht.', 'info');
+            }
+        }
+    </script>
+</body>
+</html>

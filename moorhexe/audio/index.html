@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hörbeispiele: Die Moorhexe</title>
+    <link rel="stylesheet" href="../../assets/style.css">
+    <style>
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .breadcrumb a { color: var(--secondary-color); text-decoration: none; }
+        .breadcrumb-separator { margin: 0 0.5rem; color: #bdc3c7; }
+        .audio-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 1.5rem 0;
+        }
+        .audio-player {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+            cursor: pointer;
+        }
+        .play-btn {
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="song-header">
+        <div class="header-content">
+            <h1>🎵 Hörbeispiele: Die Moorhexe</h1>
+            <p class="composer">Verschiedene Interpretationen</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumb">
+            <a href="../../index.html">🏠 Startseite</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="../index.html">🧙‍♀️ Die Moorhexe</a>
+            <span class="breadcrumb-separator">›</span>
+            <span>🎵 Hörbeispiele</span>
+        </nav>
+
+        <div class="audio-card">
+            <h3>🎹 Vollständige Aufnahme</h3>
+            <p>Professionelle Interpretation in normalem Tempo</p>
+            <div class="audio-player">
+                <button class="play-btn" onclick="playAudio('full')">▶ Anhören (3:45)</button>
+            </div>
+        </div>
+
+        <div class="audio-card">
+            <h3>🐌 Langsame Version</h3>
+            <p>Zum Mitspielen und Lernen</p>
+            <div class="audio-player">
+                <button class="play-btn" onclick="playAudio('slow')">▶ Anhören (5:20)</button>
+            </div>
+        </div>
+
+        <div class="audio-card">
+            <h3>🎼 Nur Melodie</h3>
+            <p>Rechte Hand isoliert</p>
+            <div class="audio-player">
+                <button class="play-btn" onclick="playAudio('melody')">▶ Anhören (3:45)</button>
+            </div>
+        </div>
+
+        <div class="audio-card">
+            <h3>🎵 Nur Begleitung</h3>
+            <p>Linke Hand zum Üben</p>
+            <div class="audio-player">
+                <button class="play-btn" onclick="playAudio('bass')">▶ Anhören (3:45)</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Hörbeispiele: Die Moorhexe</p>
+    </footer>
+    
+    <script src="../../assets/script.js"></script>
+    <script>
+        function playAudio(type) {
+            showNotification(`Audio "${type}" wird geladen...`, 'info');
+            // Hier würde der echte Audio-Player implementiert
+        }
+    </script>
+</body>
+</html>

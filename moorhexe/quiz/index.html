@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Die Moorhexe - Schulpraktisches Klavierspiel</title>
+    <meta name="description" content="Interaktives Quiz zu 'Die Moorhexe' von Barbara Heller">
+    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+    <style>
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .breadcrumb a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--primary-color);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 0.5rem;
+            color: #bdc3c7;
+        }
+        
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .quiz-header {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .quiz-progress {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .quiz-progress-bar {
+            background: white;
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        
+        .question-container {
+            padding: 3rem 2rem;
+        }
+        
+        .question {
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        .question.active {
+            display: block;
+        }
+        
+        .question-number {
+            color: var(--secondary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            line-height: 1.6;
+        }
+        
+        .answers {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .answer-option {
+            background: var(--bg-light);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .answer-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .answer-option:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .answer-option:hover::before {
+            left: 100%;
+        }
+        
+        .answer-option.selected {
+            border-color: var(--secondary-color);
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
+        }
+        
+        .answer-option.correct {
+            border-color: #27ae60;
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(46, 204, 113, 0.1));
+        }
+        
+        .answer-option.incorrect {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.1));
+        }
+        
+        .quiz-controls {
+            padding: 2rem;
+            text-align: center;
+            background: var(--bg-light);
+        }
+        
+        .btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results-container {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+        
+        .results-container.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--secondary-color) 0%, var(--secondary-color) var(--score-percentage), #ecf0f1 var(--score-percentage), #ecf0f1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem auto;
+            position: relative;
+        }
+        
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .score-text {
+            position: relative;
+            z-index: 2;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .feedback-text {
+            font-size: 1.2rem;
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-container {
+                margin: 1rem;
+                border-radius: 15px;
+            }
+            
+            .question-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+            }
+            
+            .answer-option {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="song-header">
+        <div class="header-content">
+            <h1>🧠 Quiz: Die Moorhexe</h1>
+            <p class="composer">Teste dein Wissen über das Stück</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb">
+            <a href="../../index.html">🏠 Startseite</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="../index.html">🧙‍♀️ Die Moorhexe</a>
+            <span class="breadcrumb-separator">›</span>
+            <span>🧠 Quiz</span>
+        </nav>
+
+        <div class="quiz-container">
+            <!-- Quiz Header -->
+            <div class="quiz-header">
+                <h2>Interaktives Quiz</h2>
+                <p>5 Fragen zu Komponistin, Tonart und Spieltechnik</p>
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar" id="progressBar"></div>
+                </div>
+                <div>Frage <span id="currentQuestion">1</span> von <span id="totalQuestions">5</span></div>
+            </div>
+
+            <!-- Quiz Questions -->
+            <div class="question-container" id="quizContainer">
+                <!-- Frage 1 -->
+                <div class="question active" data-question="1">
+                    <div class="question-number">Frage 1</div>
+                    <div class="question-text">Wer komponierte das Stück "Die Moorhexe"?</div>
+                    <div class="answers">
+                        <div class="answer-option" data-answer="a">Clara Schumann</div>
+                        <div class="answer-option" data-answer="b">Barbara Heller</div>
+                        <div class="answer-option" data-answer="c">Fanny Hensel</div>
+                        <div class="answer-option" data-answer="d">Amy Beach</div>
+                    </div>
+                </div>
+
+                <!-- Frage 2 -->
+                <div class="question" data-question="2">
+                    <div class="question-number">Frage 2</div>
+                    <div class="question-text">In welcher Tonart steht "Die Moorhexe"?</div>
+                    <div class="answers">
+                        <div class="answer-option" data-answer="a">C-Dur</div>
+                        <div class="answer-option" data-answer="b">G-Dur</div>
+                        <div class="answer-option" data-answer="c">d-Moll</div>
+                        <div class="answer-option" data-answer="d">e-Moll</div>
+                    </div>
+                </div>
+
+                <!-- Frage 3 -->
+                <div class="question" data-question="3">
+                    <div class="question-number">Frage 3</div>
+                    <div class="question-text">Welche Tempobezeichnung hat das Stück?</div>
+                    <div class="answers">
+                        <div class="answer-option" data-answer="a">Allegro</div>
+                        <div class="answer-option" data-answer="b">Andante</div>
+                        <div class="answer-option" data-answer="c">Moderato misterioso</div>
+                        <div class="answer-option" data-answer="d">Presto</div>
+                    </div>
+                </div>
+
+                <!-- Frage 4 -->
+                <div class="question" data-question="4">
+                    <div class="question-text">Welche Spieltechnik ist besonders wichtig für das Stück?</div>
+                    <div class="answers">
+                        <div class="answer-option" data-answer="a">Staccato</div>
+                        <div class="answer-option" data-answer="b">Legato und ausdrucksvolles Spiel</div>
+                        <div class="answer-option" data-answer="c">Forte-Spiel</div>
+                        <div class="answer-option" data-answer="d">Schnelle Läufe</div>
+                    </div>
+                </div>
+
+                <!-- Frage 5 -->
+                <div class="question" data-question="5">
+                    <div class="question-number">Frage 5</div>
+                    <div class="question-text">Für welche Zielgruppe ist das Stück besonders geeignet?</div>
+                    <div class="answers">
+                        <div class="answer-option" data-answer="a">Absolute Anfänger</div>
+                        <div class="answer-option" data-answer="b">Mittelstufe (2-4 Jahre Erfahrung)</div>
+                        <div class="answer-option" data-answer="c">Nur für Profis</div>
+                        <div class="answer-option" data-answer="d">Kinder unter 6 Jahren</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Controls -->
+            <div class="quiz-controls">
+                <button class="btn" id="prevBtn" onclick="previousQuestion()" disabled>← Vorherige</button>
+                <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Nächste →</button>
+                <button class="btn" id="submitBtn" onclick="submitQuiz()" style="display: none;">Quiz beenden</button>
+            </div>
+
+            <!-- Results -->
+            <div class="results-container" id="resultsContainer">
+                <h2>🎉 Quiz beendet!</h2>
+                <div class="score-circle" id="scoreCircle">
+                    <div class="score-text" id="scoreText">0/5</div>
+                </div>
+                <div class="feedback-text" id="feedbackText"></div>
+                <div style="margin-top: 2rem;">
+                    <button class="btn" onclick="restartQuiz()">🔄 Nochmal versuchen</button>
+                    <button class="btn" onclick="window.location.href='../index.html'">🏠 Zurück zum Stück</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Quiz: Die Moorhexe | Schulpraktisches Klavierspiel</p>
+    </footer>
+
+    <script src="../../assets/script.js"></script>
+    <script>
+        // Quiz Data
+        const quizData = {
+            questions: [
+                {
+                    id: 1,
+                    correct: 'b',
+                    explanation: 'Barbara Heller ist eine zeitgenössische deutsche Komponistin, die sich besonders der Klavierpädagogik widmet.'
+                },
+                {
+                    id: 2,
+                    correct: 'c',
+                    explanation: 'd-Moll verleiht dem Stück seinen mysteriösen und düsteren Charakter.'
+                },
+                {
+                    id: 3,
+                    correct: 'c',
+                    explanation: '"Moderato misterioso" bedeutet mäßig schnell und geheimnisvoll - perfekt für eine Moorhexe!'
+                },
+                {
+                    id: 4,
+                    correct: 'b',
+                    explanation: 'Legato-Spiel und musikalischer Ausdruck stehen im Vordergrund, um die Atmosphäre zu erzeugen.'
+                },
+                {
+                    id: 5,
+                    correct: 'b',
+                    explanation: 'Das Stück ist ideal für Schüler mit 2-4 Jahren Erfahrung, die bereits grundlegende Techniken beherrschen.'
+                }
+            ]
+        };
+
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        // Initialize Quiz
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgressBar();
+            addAnswerListeners();
+        });
+
+        function addAnswerListeners() {
+            const answerOptions = document.querySelectorAll('.answer-option');
+            answerOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    selectAnswer(this);
+                });
+            });
+        }
+
+        function selectAnswer(selectedOption) {
+            const question = selectedOption.closest('.question');
+            const questionNumber = parseInt(question.dataset.question);
+            const selectedAnswer = selectedOption.dataset.answer;
+            
+            // Remove previous selections
+            question.querySelectorAll('.answer-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Mark current selection
+            selectedOption.classList.add('selected');
+            
+            // Store answer
+            userAnswers[questionNumber - 1] = selectedAnswer;
+            
+            // Enable next button
+            document.getElementById('nextBtn').disabled = false;
+            
+            // Show submit button if last question
+            if (questionNumber === quizData.questions.length) {
+                document.getElementById('submitBtn').style.display = 'inline-block';
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < quizData.questions.length - 1) {
+                // Hide current question
+                document.querySelector('.question.active').classList.remove('active');
+                
+                // Show next question
+                currentQuestionIndex++;
+                document.querySelector(`[data-question="${currentQuestionIndex + 1}"]`).classList.add('active');
+                
+                // Update UI
+                updateProgressBar();
+                updateQuestionCounter();
+                updateButtons();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                // Hide current question
+                document.querySelector('.question.active').classList.remove('active');
+                
+                // Show previous question
+                currentQuestionIndex--;
+                document.querySelector(`[data-question="${currentQuestionIndex + 1}"]`).classList.add('active');
+                
+                // Update UI
+                updateProgressBar();
+                updateQuestionCounter();
+                updateButtons();
+            }
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / quizData.questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function updateQuestionCounter() {
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Previous button
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            // Next button
+            const hasAnswer = userAnswers[currentQuestionIndex] !== undefined;
+            nextBtn.disabled = !hasAnswer;
+            
+            // Submit button
+            if (currentQuestionIndex === quizData.questions.length - 1) {
+                nextBtn.style.display = hasAnswer ? 'none' : 'inline-block';
+                submitBtn.style.display = hasAnswer ? 'inline-block' : 'none';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        function submitQuiz() {
+            // Calculate score
+            score = 0;
+            quizData.questions.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    score++;
+                }
+            });
+
+            // Show correct/incorrect answers
+            showAnswerFeedback();
+            
+            // Show results after a delay
+            setTimeout(() => {
+                showResults();
+            }, 2000);
+        }
+
+        function showAnswerFeedback() {
+            quizData.questions.forEach((question, index) => {
+                const questionElement = document.querySelector(`[data-question="${index + 1}"]`);
+                const answerOptions = questionElement.querySelectorAll('.answer-option');
+                
+                answerOptions.forEach(option => {
+                    const answer = option.dataset.answer;
+                    if (answer === question.correct) {
+                        option.classList.add('correct');
+                    } else if (answer === userAnswers[index] && answer !== question.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+            });
+        }
+
+        function showResults() {
+            // Hide quiz container
+            document.getElementById('quizContainer').style.display = 'none';
+            document.querySelector('.quiz-controls').style.display = 'none';
+            
+            // Show results
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.classList.add('show');
+            
+            // Update score display
+            const scorePercentage = (score / quizData.questions.length) * 100;
+            document.getElementById('scoreText').textContent = `${score}/${quizData.questions.length}`;
+            
+            // Update score circle
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.style.setProperty('--score-percentage', scorePercentage + '%');
+            
+            // Show feedback
+            const feedbackText = document.getElementById('feedbackText');
+            if (score === quizData.questions.length) {
+                feedbackText.innerHTML = '🌟 Perfekt! Du kennst "Die Moorhexe" sehr gut!';
+            } else if (score >= quizData.questions.length * 0.8) {
+                feedbackText.innerHTML = '👏 Sehr gut! Du hast das Stück gut verstanden.';
+            } else if (score >= quizData.questions.length * 0.6) {
+                feedbackText.innerHTML = '👍 Gut gemacht! Ein paar Details könntest du noch vertiefen.';
+            } else {
+                feedbackText.innerHTML = '📚 Schaue dir das Material nochmal an und versuche es erneut!';
+            }
+        }
+
+        function restartQuiz() {
+            // Reset variables
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            score = 0;
+            
+            // Reset UI
+            document.querySelectorAll('.question').forEach((q, index) => {
+                q.classList.remove('active');
+                if (index === 0) q.classList.add('active');
+                
+                // Reset answer styles
+                q.querySelectorAll('.answer-option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'incorrect');
+                });
+            });
+            
+            // Reset controls
+            updateProgressBar();
+            updateQuestionCounter();
+            document.getElementById('prevBtn').disabled = true;
+            document.getElementById('nextBtn').disabled = true;
+            document.getElementById('submitBtn').style.display = 'none';
+            
+            // Show quiz, hide results
+            document.getElementById('quizContainer').style.display = 'block';
+            document.querySelector('.quiz-controls').style.display = 'block';
+            document.getElementById('resultsContainer').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
